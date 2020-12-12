@@ -1,16 +1,31 @@
-extends Node
+extends 'res://Src/Statemachine/Statemachine.gd'
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 
+class Fire_statge:
+	enum {
+		short,
+		long,
+		overpowered
+	}
+	var mode=short
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _init():
+	states={
+		1:"Idle",
+		"Run":{
+			1:"left",
+			2:"right",
+			3:"up",
+			4:"down"
+		},
+		"Fire":{
+			"Directions":{
+			1:"left",
+			2:"right",
+			3:"up",
+			4:"down"
+			}
+		}
+	}
+ 
