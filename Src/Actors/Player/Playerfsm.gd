@@ -1,32 +1,33 @@
 extends 'res://Src/Statemachine/Statemachine.gd'
 
-
-
 class Fire:
 	var shooting= false
 	var firing=false
-	
+
 class moving:
 	var moving=false
-onready var fire_state=Fire.new()
-onready var moving_state=moving.new()
+
+onready var fire_state = Fire.new()
+onready var moving_state = moving.new()
 
 func _init():
 	states={
-		1:"Idle",
-		2:"Turn",
-		"Shoot":{
-			1:"ShootIdle",
-			2:"Fire",
-			3:"ShootTurn"
+		1: "Idle",
+		2: "Turn",
+		"Shoot": {
+			1: "ShootIdle",
+			2: "Fire",
+			3: "ShootTurn"
 		},
-		}
+	}
+
 func _ready():
-	current_state=states[1]
+	current_state = states[1]
 
 func state_logic(delta):
-	var times =3 if !fire_state.shooting else 0.5
+	var times = 3 if !fire_state.shooting else 0.5
 	parent.apply_movment(times)
+
 func tranisition(delta):
 	match current_state:
 		"Idle":
@@ -95,6 +96,7 @@ func on_exiting_shoot_idle(new_state):
 	else:
 		parent.bar_texture.visible=false
 		parent.baranimationstop(true)
+		parent.shoot_egg()
 
 func on_entering_fire_state():
 	pass
