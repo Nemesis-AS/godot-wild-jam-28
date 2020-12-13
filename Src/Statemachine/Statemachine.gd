@@ -7,16 +7,17 @@ var previous_state
 
 var current_state
 
+onready var parent=get_parent()
+
 func _physics_process(delta):
 	state_logic(delta)
 	var state=tranisition(delta)
 	if state!=null:
 		previous_state=current_state
 		current_state=state
-		if previous_state!=null:
-			enter_state(previous_state,current_state)
-		if current_state!=null:
-			exit_state(current_state,previous_state)
+		print(current_state)
+		enter_state(previous_state,current_state)
+		exit_state(current_state,previous_state)
 
 
 func state_logic(delta)->void:
