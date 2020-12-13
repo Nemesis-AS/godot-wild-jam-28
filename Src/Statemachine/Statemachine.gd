@@ -28,5 +28,6 @@ func tranisition(delta):
 
 func enter_state(old_state,new_state):
 	pass
+
 func exit_state(new_state,old_state):
 	pass

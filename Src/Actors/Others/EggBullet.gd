@@ -7,7 +7,8 @@ var direction : Vector2
 func _ready() -> void:
 	pass # Replace with function body.
 
-
 func _physics_process(delta: float) -> void:
 	position += direction * SPEED * delta
 
+func _on_LifeTimer_timeout() -> void:
+	queue_free()

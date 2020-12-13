@@ -37,7 +37,6 @@ offset = Vector2( 0, 64 )
 position = Vector2( 45.2921, 30.4596 )
 
 [node name="Bar" type="TextureProgress" parent="Bar"]
-visible = false
 margin_left = -10.5229
 margin_top = 63.9641
 margin_right = 61.4771
