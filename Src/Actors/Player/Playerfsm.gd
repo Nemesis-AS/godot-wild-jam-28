@@ -17,15 +17,16 @@ func _init():
 		2:"Turn",
 		"Shoot":{
 			1:"ShootIdle",
-			2:"Fire"
+			2:"Fire",
+			3:"ShootTurn"
 		},
 		}
 func _ready():
 	current_state=states[1]
 
 func state_logic(delta):
-	if !fire_state.shooting:
-		parent.apply_movment()
+	var times =3 if !fire_state.shooting else 0.5
+	parent.apply_movment(times)
 func tranisition(delta):
 	match current_state:
 		"Idle":
@@ -44,8 +45,13 @@ func tranisition(delta):
 		"Fire":
 			if !fire_state.shooting:
 				return states[1]
-			if fire_state.firing:
-				return states["Shoot"][2]
+			if !fire_state.firing:
+				return states[1]
+		"ShootTrun":
+			if parent.rotate_direction==0:
+				return states["Shoot"][1]
+			if ! fire_state.shooting:
+				return states[1]
 	return null
 
 func enter_state(old_state,new_state):
@@ -61,7 +67,6 @@ func exit_state(new_state,old_state):
 	match old_state:
 		"ShootIdle":
 			on_exiting_shoot_idle(new_state)
-
 
 func _unhandled_input(event):
 	if current_state in ["Idle","ShootIdle"]:
@@ -83,9 +88,13 @@ func _on_Baranimation_animation_finished(anim_name):
 func on_entering_shoot_idle():
 	parent.bar_texture.visible=true
 	parent.baranimationplay()
+
 func on_exiting_shoot_idle(new_state):
 	if new_state =="Fire":
 		parent.baranimationstop(false)
 	else:
 		parent.bar_texture.visible=false
 		parent.baranimationstop(true)
+
+func on_entering_fire_state():
+	pass
