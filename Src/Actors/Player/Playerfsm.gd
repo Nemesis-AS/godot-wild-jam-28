@@ -1,13 +1,13 @@
 extends 'res://Src/Statemachine/Statemachine.gd'
 
 class Fire:
-	var shooting= false
-	var firing=false
-
+	var shooting:bool= false
+	var firing:bool=false
+	var bar_value:float=0.0
 class moving:
 	var moving=false
 
-onready var fire_state = Fire.new()
+onready var fire_state= Fire.new()
 onready var moving_state = moving.new()
 
 func _init():
@@ -24,8 +24,9 @@ func _init():
 func _ready():
 	current_state = states[1]
 
+
 func state_logic(delta):
-	var times = 3 if !fire_state.shooting else 0.5
+	var times = 1 if !fire_state.shooting else 0.25
 	parent.apply_movment(times)
 
 func tranisition(delta):
@@ -44,8 +45,6 @@ func tranisition(delta):
 			if !fire_state.shooting:
 				return states[1]
 		"Fire":
-			if !fire_state.shooting:
-				return states[1]
 			if !fire_state.firing:
 				return states[1]
 		"ShootTrun":
@@ -62,13 +61,16 @@ func enter_state(old_state,new_state):
 		"ShootIdle":
 			on_entering_shoot_idle()
 		"Fire":
-			pass
+			on_entering_fire_state()
+	if new_state in ["Idle","Fire"]:
+		parent.animation_player.play(new_state)
 
 func exit_state(new_state,old_state):
 	match old_state:
 		"ShootIdle":
 			on_exiting_shoot_idle(new_state)
-
+		"Fire":
+			pass
 func _unhandled_input(event):
 	if current_state in ["Idle","ShootIdle"]:
 		if event.is_action_pressed("Space"):
@@ -96,7 +98,17 @@ func on_exiting_shoot_idle(new_state):
 	else:
 		parent.bar_texture.visible=false
 		parent.baranimationstop(true)
-		parent.shoot_egg()
+		parent.bar_texture.value=0
 
 func on_entering_fire_state():
-	pass
+	#it sould animate
+	#getcolliderinfo and apply impulse
+	print("Hi")
+
+
+func _on_Player_animation_animation_finished(anim_name):
+	match anim_name:
+		"Fire":
+			fire_state.firing=false
+			fire_state.shooting=false
+			parent.bar_texture.visible=false
