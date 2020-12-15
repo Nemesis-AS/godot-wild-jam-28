@@ -4,11 +4,14 @@ const Egg = preload("res://Src/Actors/Others/Egg.tscn")
 
 var movements: Dictionary = {}
 var rotate_direction: int = 0
+var fired=false
+var fire_velocity=Vector2()
 
 onready var bar_animation: AnimationPlayer = get_node("Bar/Baranimation")
 onready var player_sprite: Sprite = get_node("Sprite")
 onready var bar_texture: TextureProgress = get_node("Bar/Bar")
 onready var animation_player:AnimationPlayer=get_node("Sprite/Player_animation")
+onready var player_hit_area:KinematicBody2D=get_node("HitArea/KinematicBody2D")
 enum {up,down,stop}
 var Bar_mode=up
 
@@ -41,7 +44,13 @@ func baranimationstop(param:bool):
 func shoot_egg():
 	egg.shoot(rotation, bar_texture.value)
 
-
+func hit_logic():
+	for index in player_hit_area.get_slide_count():
+		var collision=player_hit_area.get_slide_collision(index)
+		if collision.collider.is_in_group("Egg"):
+			print("hellosososo")
+			collision.collider.apply_central_impulse(-collision.normal*100)
+	player_hit_area.move_and_slide(fire_velocity,Vector2.UP,false,4,PI/4,false)
 
 
 

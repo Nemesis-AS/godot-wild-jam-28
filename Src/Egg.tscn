@@ -4,10 +4,13 @@
 [ext_resource path="res://Src/Egg.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 31.477, 30.6476 )
+extents = Vector2( 37.5674, 35.3338 )
 
-[node name="Egg" type="RigidBody2D"]
+[node name="Egg" type="RigidBody2D" groups=[
+"Egg",
+]]
 gravity_scale = 0.0
+contact_monitor = true
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true

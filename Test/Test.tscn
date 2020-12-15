@@ -12,7 +12,7 @@ extents = Vector2( 31.0558, 28.9593 )
 [node name="Egg" parent="." instance=ExtResource( 1 )]
 position = Vector2( 527.502, 260.215 )
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="KinematicBody2D" parent="."]
 position = Vector2( 528.916, 405.879 )
 scale = Vector2( 4, 0.5 )
 script = ExtResource( 3 )

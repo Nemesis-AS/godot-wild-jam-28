@@ -28,6 +28,8 @@ func _ready():
 func state_logic(delta):
 	var times = 1 if !fire_state.shooting else 0.25
 	parent.apply_movment(times)
+	if current_state =="Fire":
+		parent.hit_logic()
 
 func tranisition(delta):
 	match current_state:
@@ -103,7 +105,7 @@ func on_exiting_shoot_idle(new_state):
 func on_entering_fire_state():
 	#it sould animate
 	#getcolliderinfo and apply impulse
-	print("Hi")
+	pass
 
 
 func _on_Player_animation_animation_finished(anim_name):
